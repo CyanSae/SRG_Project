@@ -44,8 +44,11 @@ venv/
 processed_dataset
 
 RGCN/losses
-accs
-my_rgcn/backup/
+RGCN/accs
+RGCN/my_rgcn/backup
 
 RGCN/processed_dataset
 RGCN/my_rgcn/backup
+
+SOG/data/backup
+SOG/data/large

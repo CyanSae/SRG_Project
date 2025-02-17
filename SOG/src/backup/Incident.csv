@@ -1,0 +1,175 @@
+Defi platform,chain browser,adversarial contracts,interval time,reason,loss
+Bao,etherscan,0x3F99D5Cd830203a3027EB0ed6548db7f81C3408f,00:00:00,Donate Inflation ExchangeRate && Rounding Error,46000
+RoeFinance,etherscan,0x3a5b7DB0BE9F74324370FBD65b75850A5c82D176,00:00:00,FlashLoan price manipulation,80000
+BRA,bscscan,0x6066435edce9c2772f3f1184b33fc5f7826d03e7,00:00:00,Business Logic Flaw,
+BRA,bscscan,0x1fae46b350c4a5f5c397dbf25ad042d3b9a5cb07,00:00:00,,224000
+BabySwap,bscscan,0xde7e741bd9dc7209b56f1ef3b663efb288c928d4,00:00:00,Parameter Access Control,65000
+BEANSTALK,etherscan,0x79224bC0bf70EC34F0ef56ed8251619499a59dEf,0:00:00,DAO + Flashloan,182000000
+Melo,bscscan,0x4985DB6Fa42F6a30Ea7D20CB19591A0552C67238,00:00:00,Access Control,90000
+Cellframenet,bscscan,0x1e2a251b29e84e1d6d762c78a9db5113f5ce7c48,00:00:00,Calculation issues during liquidity migration,76000
+Omni,etherscan,0x3c10e78343c475b99d20fa544dd30b43c0cba26f,0:00:00,Reentrancy,1400000
+DeFiPie,bscscan,0x0d1e8ceb7a41a7685ae3bf8a20c310cda1568281,0:00:00,Flashloan+reentrancy,350000
+INVERSE FINANCE,etherscan,0xf508c58ce37ce40a40997C715075172691F92e2D,00:00:08,price manipulation,15600000
+BBOX,bscscan,0xa792a5f442b07b3cb8da5867c4e6940aa85c5bb5,00:00:09,FlashLoan price manipulation,12000
+SEAMAN,bscscan,0x0E647d34c4caF61D9E377a059A01b5C85AB1d82a,00:00:12,Business Logic Flaw,7000
+Rubic,etherscan,0x253dD81d642220267ccAc1d8202c0B96a92b299e,00:00:12,logic flaw,26250
+HEALTH,bscscan,0x80e5fc0d72e4814cb52c16a18c2f2b87ef1ea2d4,00:00:12,Transfer Logic Flaw,9600
+Civfund,etherscan,0xF466F9f431aEa853040EF837626b1c59CC963ce2,00:00:12,Lack of access control,165000
+Curve,etherscan,0x83E056Ba00bEae4D8aA83dEb326a90A4E100d0c1,00:00:12,Vyper Compiler Bug && Reentrancy,50000000
+HeavensGate,etherscan,0x38702e5c98bA4AD4b786D5a075A5c74694cD616d,00:00:12,Rebasing logic issue,14000
+HeavensGate,etherscan,0x8faA53A742Fc732B04dB4090A21e955Fe5c230be,00:00:12,,
+EarningFram,etherscan,0xFe141C32E36Ba7601D128F0C39DEdBE0F6aBb983,00:00:12,,286000
+CFC,bscscan,0x8213e87bb381919b292ace364d97d3a1ee38caa4,00:00:15,Uniswap Skim() token balance attack,16000
+HARVEST FINANCE,etherscan,0xc6028a9Fa486F52efd2B95B949AC630d287CE0aF,00:00:18,Flashloan Attack,33800000
+APEDAO,bscscan,0x45aa258ad08eeeb841c1c02eca7658f9dd4779c0,00:00:18,Business Logic Flaw,7000
+Euler FINANCE,etherscan,0x036cec1a199234fC02f72d29e596a09440825f1C,00:00:24,business logic flaw and flashloan,200000000
+Euler FINANCE,etherscan,0xeBC29199C817Dc47BA12E3F86102564D640CBf99,00:00:24,,
+AUDIUS,etherscan,0xbdbb5945f252bc3466a319cdcc3ee8056bf2e569,00:00:24,Storage Collision & Malicious Proposal,1080000
+BTC20,etherscan,0xb7FbF984A50cd7c66e6dA3448D68D9f3B7F24f33,00:00:24,Price Manipulation,32400
+NewFi,bscscan,0x18703a4fd7b3688607abf25424b6ab304def2512,00:00:24,Lack Slippage Protection,31000
+Cream Finance,etherscan,0x32d77947aACa79FE5485560C16090721725f2B84,00:00:29,,
+BIGFI,bscscan,0x1a14ccc8f353d16582c0dfab907481b218475959,00:00:33,Reflection token,30000
+BEGO,bscscan,0x08a525104ea2a92abbce8e4e61c667eed56f3b42,00:00:36,Incorrect signature verification,7200
+0vix,polygonscan,0x407feaec31c16b19f24a8a8846ab4939ed7d7d57,00:00:38,FlashLoan Price Manipulation,2000000
+xSurge,bscscan,0x1514aaa4dcf56c4aa90da6a4ed19118e6800dc46,00:00:42,Flashloan Attack + Reentrancy,5000000
+Balancer,etherscan,0x2100dCd8758aB8B89b9b545A43A1E47e8e2944f0,00:00:48,Token Incompatible,2408
+NST Simple Swap,polygonscan,0x3BB7a0f2fe88ABA35408C64F588345481490Fe93,00:00:50,"Unverified contract, wrong approval",40000
+PANCAKEBUNNY,polygonscan,0xd2D420C273f836f44CCA9c98ee76c789A12cc1A5,00:00:52,Price Oracle Manipulation,42000000
+ARBIX FINANCE,bscscan,0xB4A60F4b236A557d12Ce4c6f38c99BEC8bc6bDA9,00:01:02,rug-pull,10000000
+landNFT,bscscan,0x2e599883715d2f92468fa5ae3f9aab4e930e3ac7,00:01:03,Lack of permission control,149616
+SellToken03,bscscan,0x9A366027E6bE5AE8441c9f54455e1d6C41F12E3C,00:01:03,Unchecked User Input,
+SellToken03,bscscan,0xc2f54422c995f6c2935bc52b0f55a03c2f3e429c,00:01:03,,
+MintoFinance,bscscan,0xba91db0b31d60c45e0b03e6d515e45fcabc7b1cd,00:01:03,Signature Replay,9000
+PICKLE FINANCE,etherscan,0x2B0b02ce19c322b4DD55A3949B4Fb6e9377f7913,00:01:05,business logic flaw,20000000
+GYM NETWORK,bscscan,0x7cbfd7bccd0a4a377ec6f6e44857efe42c91b6ea,00:01:09,Access control,2100000
+Grim Finance,ftmscan,0xb08cCb39741d746Dd1818641900f182448Eb5e41,0:01:12,Flashloan & Reentrancy,30000000
+RevertFinance,etherscan,0xD346f652A56D149d585b5447851928f42f61Fb27,00:01:24,Arbitrary External Call Vulnerability,30000
+DKP,bscscan,0xf34Ad6Cea329F62F4516FFE00317AB09d934fBa3,00:01:24,FlashLoan price manipulation,80000
+CurveBurner,etherscan,0x915dFF6707bEa63daEa1B41Aa5d37353229066BA,00:01:24,Lack Slippage Protection,36000
+PLTD,bscscan,0x83797825f6020a443b95fa3932ab13dd61d48b49,00:01:25,Transfer Logic Flaw,24000
+ATK,bscscan,0xd7ba198ce82f4c46ad8f6148ccfdb41866750231,00:01:27,FlashLoan manipulate price,127000
+Orion Protocol,bscscan,0x84452042cB7be650BE4eB641025ac3C8A0079b67,00:01:27,Reentrancy,3000000
+SpaceGodzilla,bscscan,0x3d817ea746edd02c088c4df47c0ece0bd28dcd72,00:01:30,Access control,25378
+MERLIN LABS,bscscan,0xcc369fAf26c0457cEEa7a24bBFE158e106214147,00:01:36,Business logic flaw,330000
+DFS,bscscan,0x87bfd80c2a05ee98cfe188fd2a0e4d70187db137,00:01:48,Insufficient validation + flashloan,1450
+MIMSpell,etherscan,0x26Fe84754a1967d67b7bEFAa01b10d7B35BBaF0A,00:01:48,Arbitrary External Call Vulnerability,17000
+DAppSocial,etherscan,0xE897C0f9443785F8D4F0FA6e92a81066b3fbFEe2,00:01:48,Business Logic Flaw,16000
+SADDLE FINANCE,etherscan,0x797418A5D9dAd50Ecc0851E0Cc23C61EF4C1B9bf,00:01:50,Swap Metapool Attack,10000000
+SADDLE FINANCE,etherscan,0x7336F819775B1D31Ea472681D70cE7A903482191,00:01:50,,
+ULME,bscscan,0x8523c7661850d0da4d86587ce9674da23369ff26,00:01:51,Flashloan,250000
+Balancer,etherscan,0xFF6f7E421CAc8b488634C7A8275093A62075A1c6,00:01:55,Reentrancy,2200000
+SAFEDOLLAR,polygonscan,0xc44e71debf89d414a262edadc44797eba093c6b0,00:01:58,Deflationary token incompatible,200000
+OlympusDAO,etherscan,0xa29E4fe451CCFa5e7DEF35188919ad7077A4DE8f,00:02:00,No input validation,292000
+Spartan Protocol,bscscan,0x288315639c1145f523af6d7a5e4ccf8238cd6a51,00:02:00,Logic Flaw,30500000
+Axioma,bscscan,0xD088b5E169301d280129deb981d598A2Fd277b5c,00:02:03,Business Logic Flaw,11550
+UEarnPool,bscscan,0x14cab4bb0d3bff14cc104d53c812bb1cc882ab3d,00:02:06,FlashLoan Attack,24000
+Allbridge,bscscan,0x7d83fe202c51982a72e0a1146ec37b4643c725d7,00:02:06,FlashLoan price manipulation,550000
+XSTABLE Protocol,etherscan,0x4FBB8840D37a21E38c8E438db27AAE7bb91aF052,00:02:18,Incorrect Logic Check,48600
+OLIFE,bscscan,0xa9de288d61a7ed99cdd1109b051ef402d85a6b91,00:02:18,Reflection token,19200
+Spankchain ,etherscan,0xc5918a927c4fb83fe99e30d6f66707f4b396900e,00:02:21,reentrancy,38064
+EHIVE,etherscan,0x98C2e1E85F8bF737D9c1450dd26D4A4bf880B892,00:02:24,Business Logic Flaw,15000
+APC,bscscan,0x02a1d194914bfda8d5d46333cf6dda485923c4c4,0:02:36,FlashLoan & price manipulation,6000
+NeverFall,bscscan,0x35353ec557b9e23137ae27e9d4cc829d4dace16b,00:02:42,Price Manipulation,74000
+JAY,etherscan,0xed42Cb11b9D03c807ED1ba9c2eD1d3BA5Bf37340,00:02:48,Insufficient validation + Reentrancy,26250
+Sushiswap,etherscan,0xEacfF4dAb085588AE3637d261a492fAD2C2d193a,00:02:49,,3300000
+Paraluni,bscscan,0x4770b5cb9d51EcB7AD5B14f0d4F2cEe8e5563645,00:03:21,Flashloan & Reentrancy,1700000
+BrahTOPG,etherscan,0x60032a41726241499B0c626c836C9099cb895c05,00:03:36,Arbitrary External Call Vulnerability,89000
+CompounderFinance,etherscan,0x2D7973177d594237a9B347cd41082Af4CbB40f2b,00:03:36,Manipulation of funds through fluctuations in the amount of exchangeable assets,27174
+EAC,bscscan,0x20Dcf125f0563417d257B98A116c3fea4F0B2DB2,00:03:45,Price Manipulation,15950
+WARP FINANCE,etherscan,0xdF8BEE861227FFC5EEA819C332A1C170Ae3dbACb,00:03:47,flashloan,8000000
+ZoomproFinance,bscscan,0xb8d700f30d93fab242429245e892600dcc03935d,00:03:48,Flashloans & Price Manipulation,61160
+Phoenix,polygonscan,0xb31ee510a057ac9a38a18bdc94b1765387728077,00:03:54,Access Control & Arbitrary External Call,100000
+SellToken01,bscscan,0xf635fea87f0a8a444ede1dbb698d875dbb417829,00:04:00,Access control,95000
+Uwerx,etherscan,0xDA2CCfC4557BA55eAda3cBEbd0AEFfCf97Fc14CA,00:04:00,Fault logic,316800
+LPC,bscscan,0xcfb7909b7eb27b71fdc482a2883049351a1749d7,00:04:06,"Business Logic Flaw : Incorrect recipient balance check, did not check sender!=recipient in transfer",45175
+Sheep,bscscan,0x2021932C4Dde18727A827c15F4Bc0d6e7DE636aa,0:04:09,No input validation,3000
+BH,bscscan,0x216CcfD4fB3f2267677598f96Ef1Ff151576480C,00:04:09,Price manipulation,1270000
+Bitpaidio,bscscan,0x7b9265c6aa4b026b7220eee2e8697bf5ffa6bb9a,00:04:24,Business Logic Flaw,30000
+ELEVEN FINANCE,bscscan,0x01Eae4E246dFaE08a4Ef5c3D8F31d0668686eAb3,0:04:51,Doesn’t burn shares,994904
+LuckyTiger NFT,etherscan,0x880DF6cC30bb7934D065498Ed9163a6e3b5Aa67D,0:04:52,Predicting Random Numbers,
+FloorDAO,etherscan,0x6cE5a85CFF4c70591DA82De5eb91c3Fa38B40595,00:05:00,Rebasing logic issue,72000
+VINU,etherscan,0xf73B8EA8838CbA9148fB182e267a000f7CFbA8dd,00:05:12,Price Manipulation,6000
+Shido,bscscan,0xcdb3d057ca0cfdf630baf3f90e9045ddeb9ea4cc,00:05:12,Business Loigc,548000
+CS Token,bscscan,0x90fa57d23b85cdd52c46b85636f44c47926ee2e3,00:05:15,Outdated Global Variable,714000
+Orion Protocol,etherscan,0x5061F7e6dfc1a867D945d0ec39Ea2A33f772380A,00:05:24,Reentrancy,
+Xcarnival,etherscan,0xf70F691D30ce23786cfb3a1522CFD76D159AcA8d,00:05:33,Infinite Number of Loans,3870000
+Swapos V2,etherscan,0x2df07C054138Bf29348F35a12a22550230BD1405,00:05:48,error k value Attack,468000
+EGD Finance,bscscan,0xc30808d9373093fbfcec9e026457c6a9dab706a7,00:05:54,Flashloans & Price Manipulation,36044
+AnnexFinance,bscscan,0xb08efc0933a4552d4294c729fed5176c5e3e63fd,00:06:06,Verify flashLoan Callback,3000
+VISOR FINANCE,etherscan,0x10C509AA9ab291C76c45414e7CdBd375e1D5AcE8,0:06:11,Reentrancy,8200000
+MONOX,polygonscan,0x119914De3AE03256fd58B66Cd6b8c6A12c70Cfb2,00:06:28,Price Manipulation,
+OmniEstate,bscscan,0xdd87d807774c8aa9d70fc6af5912c97fadbf531b,00:06:57,No Input Parameter Check,70000
+FEI RARI,etherscan,0x32075bAd9050d4767018084F0Cb87b3182D36C45,00:07:11,Flashloan Attack + Reentrancy,
+FireBirdPair,polygonscan,0x22B1A115B16395E5ebD50F4f82AeF3a159e1C6d1,00:07:14,Lack Slippage Protection,2240
+NewFreeDAO,bscscan,0xa35ef9fa2f5e0527cb9fbb6f9d3a24cfed948863,00:07:21,Flashloans Attack,1000000
+GPT Token,bscscan,0x2a9ab219d4f82fbd9f522974bd82fe92c376f376,00:08:36,Fee Machenism Exploitation,42000
+Uerii Token,etherscan,0xFD4DcCD754EAaA8C9196998c5Bb06A56dF6a1D95,0:09:12,Access Control,2400
+AUR,bscscan,0x3d743b2f760a431cc20047cb5c7758c9a8860d6b,0:09:45,Access control,13000
+DODO,etherscan,0x910FD17B9Bfc42A6eEA822912f036EF5a080Be8A,00:10:40,Flashloan Attack,700000
+SellToken02,bscscan,0x19Ed7Cd5F1d2bD02713131344d6890454D7C599F,00:11:02,Price Manipulation,197000
+DFXFinance,etherscan,0x6cFa86a352339E766FF1cA119c8C40824f41F22D,00:11:24,Flashloan,4000000
+N00d Token,etherscan,0x9C5A2A6431523fBBC648fb83137A20A2C1789C56,00:11:36,Flashloan + Reentrancy,29000
+BGLD,etherscan,0x56b2b04e5cea5274fc5f79d648ea7da739a50b41,00:12:58,FlashLoan price manipulation,18000
+Cream Finance,etherscan,0xbd51Cb8c06F768d3225b613B79B1386F4c83D1FA,00:13:14,Flashloan Attack + Reentrancy,
+DYNA,bscscan,0xd360b416ce273ab2358419b1015acf476a3b30d9,00:13:34,Business Logic Flaw,21000
+LFI Token,polygonscan,0x43623b96936e854f8d85f893011f22ac91e58164,00:14:28,Business Logic Flaw,36000
+Lendf.Me,etherscan,0x538359785a8D5AB1A741A0bA94f26a800759D91D,00:14:51,reentrancy,25000000
+AKROPOLIS,etherscan,0xe2307837524Db8961C4541f943598654240bd62f,00:16:18,reentrancy & malicious token,2000000
+BONQDAO,polygonscan,0xED596991ac5F1Aa1858Da66c67f7CFA76e54B5f1,00:18:02,Price Oracle Manipulation,88000000
+GDS,bscscan,0x0b995c08abddc0442bee87d3a7c96b227f8e7268,00:18:51,Business Logic Flaw,180000
+GDS,bscscan,0x16059b0b6842b33c088b3246e5b7afddd9dffb4b,00:18:51,,
+TEMPLEDAO,etherscan,0x2Df9c154fe24D081cfE568645Fb4075d725431e0,0:19:36,Insufficient access control,2300000
+BabyDogeCoin2,bscscan,0x51873a0b615a51115f2cfbc2e24d9db4bfa2e6e2,0:19:49,Lack Slippage Protection,264600
+BNO,bscscan,0xd138b9a58d3e5f4be1cd5ec90b66310e241c13cd,00:19:54,Invalid emergency withdraw mechanism,505000
+URANIUM FINANCE,bscscan,0x2b528a28451e9853f51616f3b0f6d82af8bea6ae,00:20:24,Miscalculation,50000000
+MetaPoint,bscscan,0xc6E451C8Fa3418b703121AC23e44803D143c5d5c,00:20:29,access control,820000
+YEARN,etherscan,0x8102Ae88C617deb2A5471CAc90418Da4Ccd0579e,00:20:48,Misconfiguration,10000000
+MONOX,etherscan,0xf079d7911c13369E7fd85607970036D2883aFcfD,0:22:13,Price Manipulation,31000000
+ALPHA FINANCE,etherscan,0x560A8E3B79d23b0A525E15C6F3486c6A293DDAd2,00:22:26,flashloan,37500000
+RFB,bscscan,0xd5de2914bc6d2f005228a04289e8d518c710a049,00:22:36,Predicting Random Numbers,7200
+WINTERMUTE,etherscan,0x0248F752802B2cfB4373cc0c3bC3964429385c26,00:22:48,Signature replay,62000000
+TRANSIT SWAP,etherscan,0x17ff6c94ba3a49c72ef2f10782de8a6152f204ea,0:26:36, Incorrect owner address validation,21000000
+Kashi,etherscan,0x8c761066Bc6c20e9c65eCe9972A9EB6Ed511Fd4d,00:27:36,Price-caching Design Defect,110000
+REVEST FINANCE,etherscan,0xb480Ac726528D1c195cD3bb32F19C92E8d928519,00:31:41,Reentrancy,11200000
+CREAM FINANCE,etherscan,0x38c40427efbAAe566407e4CdE2A91947dF0bD22B,0:31:46,Flashloan Attack + Reentrancy,130000000
+CREAM FINANCE02,etherscan,0x961D2B694D9097f35cfFfa363eF98823928a330d,00:31:46,Price Manipulation,18000000
+BELT,bscscan,0x4eb362934d56f2669a712cb92d316cd465921b5d,0:34:24,flashloan,6300000
+PANCAKEBUNNY,bscscan,0xcc598232a75fb1b361510bce4ca39d7bc39cf498,00:49:00,,
+RARI CAPITAL,etherscan,0x2f755e8980f0c2E81681D82CCCd1a4BD5b4D5D46,00:50:41,Cross Contract Reentrancy,80000000
+Nmbplatform,bscscan,0xd9ca1023a876b15391359237e848c7329f1004f0,00:53:44,FlashLoan price manipulation,
+Nmbplatform,bscscan,0x3c4e5b099f3c02122079d124138377e1b9048629,00:53:44,FlashLoan price manipulation,76000
+Rikkei Finance,bscscan,0xe6DF12a9f33605F2271D2a2DdC92E509E54E6b5F,01:01:28,Access control,1100000
+TEAM FINANCE,etherscan,0xCFF07C4e6aa9E2fEc04DAaF5f41d1b10f3adAdF4,1:06:48,Liquidity Migration Exploit,15800000
+FEI RARI,etherscan,0xE39f3C40966DF56c69AA508D8AD459E77B8a2bc1,01:09:52,Flashloan Attack + Reentrancy,
+Primitive Finance,etherscan,0x230e9536872D0b19f593c26Aa416B954a6fB6692,01:21:11,Reentrancy,1000000
+INVERSE FINANCE2,etherscan,0xeA0c959BBb7476DDD6cD4204bDee82b790AA1562,01:22:05,price manipulation,1260000
+THORCHAIN2,etherscan,0x4A33862042D004D3fc45E284E1aaFa05B48e3c9C,1:25:16,,8000000
+POPSICLE FINANCE,etherscan,0xdFb6faB7f4bc9512d5620e679E90D1C91C4EAdE6,01:40:42,business logic flaw,20000000
+YEARN,etherscan,0x9Fcc1409B56Cf235D9CdbbB86b6AD5089fA0EB0F,01:44:12,,
+UPSToken,etherscan,0x762d2A9f065304D42289f3f13Cc8EA23226d3b8C,1:59:24,business logic flaw,38500
+Uniswap ,etherscan,0xBD2250D713bf98b7E00c26E2907370aD30f0891a,02:44:31,reentrancy,220000
+Biswap,bscscan,0x1d448e9661c5abfc732ea81330c6439b0aa449b5,02:44:50,V3Migrator Exploit,72000
+pSeudoEth,etherscan,0xf88D1D6D9DB9A39Dbbfc4B101CECc495bB0636F8,02:52:36,Pool manipulation,2300
+BEARN,bscscan,0xef39f14213714001456e2e89eddbdf8c850c3be6,03:45:54,,769000
+THORCHAIN,etherscan,0x700196E226283671a3de6704EBCdb37a76658805,05:49:25,,8000000
+INDEXED FINANCE,etherscan,0xfbC2e6B188013fC5eacd9944e6b8cEd2C467464A,06:09:20,Price Manipulation,16000000
+PUNK PROTOCOL,etherscan,0x1695CE70DA4521Cb94DEA036e6ebCf1E8a073ee6,09:34:26,business logic flaw,8950000
+LW,bscscan,0xa4fbc2c95ac4240277313bf3f810c54309dfcd6c,10:24:15,FlashLoan Price Manipulation,50000
+Yearn Finance,etherscan,0x62494b3ed9663334E57f23532155eA0575C487C5,10:30:10,Slippage proection absent,2700000
+QTNToken,etherscan,0xA33c965Ca6D3bdc42BDb23a79081757090eb7700,10:37:00,business logic flaw,3600
+SNK,bscscan,0xc04c4914d14225345f1678a705a69aa5636b3a33,20:08:10,Reward Calculation Error,197000
+FURUCOMBO,etherscan,0x86765dde9304bEa32f65330d266155c4fA0C4F04,26:49:32,business loigic flaw,14000000
+MEV,etherscan,0x6554FF0f2B6613Bb2baa9A45788AD8574a805f6d,31:55:12,Badc0de,282000
+BXH,bscscan,0x4e77df7b9cdcecec4115e59546f3eacba095a89f,52:22:57,Flashloan & Price Oracle Manipulation,40305
+VTF Token,bscscan,0x450595e4a42cc08c14091b08dbab654a68b0a877,53:19:18,Incorrect Reward calculation,50000
+Curve,etherscan,0x9420F8821aB4609Ad9FA514f8D2F5344C3c0A6Ab,54:32:48,Vyper Compiler Bug && Reentrancy,
+ROLL,etherscan,0xeaA86ddd49D8907c939413e92888536E4587Bd9A,100:55:58,private key,5246500
+LEVEL FINANCE,bscscan,0xf08a01D2CaCE301aE69f07aF5fdFb2336da2F629,172:07:09,Business Logic Flaw,1100000
+Ragnarok,bscscan,0xdfc372577482eb1b45ff6402f7a68bbd98b85bba,205:34:08,Broken Access Control,44000
+BabyDogeCoin,bscscan,0x9a6b926281b0c7bc4f775e81f42b13eda9c1c98e,218:55:41,Lack Slippage Protection,135000
+EFLeverVault,etherscan,0x140ccA423081ed0366765F18fC9f5Ed299699388,409:03:48,Verify flashLoan Callback,1350000
+ElasticSwap,etherscan,0xE911519dc7f35996C6ad5C8A53e82B101af790d6,411:48:36,Business Logic Flaw,845000
+UN,bscscan,0x98e241bd3be918e0d927af81b430be00d86b04f9,501:34:22,Price Manipulation,26000
+TIFIToken,bscscan,0xbec576e2e3552f9a1751db6a4f02e224ce216ac1,639:37:16,FlashLoan price manipulation,47850
+YEARN,etherscan,0x63B6CE082EBC08fdE7F270BEAb3377Ac7bd135Af,lack function call information,Misconfiguration,
+ARA,bscscan,0x98e241bd3be918e0d927af81b430be00d86b04f9,lack contract create block information,,125000
