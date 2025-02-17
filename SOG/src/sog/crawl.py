@@ -100,7 +100,7 @@ def main(csv_file, api_key, output_file):
     # get_by_trans(csv_file, api_key, output_file)
 
 
-# 使用Etherscan API密钥
+# Etherscan API密钥
 api_key = '1EYF2RHYIB34DH5SJHPZ2RV1KE7J8WTAU3'
 csv_file = 'dataset/379_malicoius.csv'
 output_file = 'bytecode/379_malicoius_bytecodes_deployed.csv'
