@@ -1,53 +1,47 @@
-annotated-types==0.7.0
-Brotli @ file:///croot/brotli-split_1714483155106/work
-certifi @ file:///croot/certifi_1725551672989/work/certifi
-charset-normalizer @ file:///croot/charset-normalizer_1721748349566/work
-contourpy==1.3.1
-cycler==0.12.1
-dgl==2.4.0
-filelock==3.13.1
-fonttools==4.55.2
-fsspec==2024.2.0
-idna @ file:///croot/idna_1714398848350/work
-imbalanced-learn==0.12.4
-Jinja2==3.1.3
-joblib==1.4.2
-kiwisolver==1.4.7
-lightning-utilities==0.11.9
-MarkupSafe==2.1.5
-matplotlib==3.9.3
-mkl-service==2.4.0
-mkl_fft @ file:///io/mkl313/mkl_fft_1730824109137/work
-mkl_random @ file:///io/mkl313/mkl_random_1730823916628/work
-mpmath==1.3.0
-networkx @ file:///croot/networkx_1720002482208/work
-numpy @ file:///croot/numpy_and_numpy_base_1708638617955/work/dist/numpy-1.26.4-cp312-cp312-linux_x86_64.whl#sha256=1d700f51d8b4fa684d858c9e3b56b1656bc5c82b6b79ff08d4e3b491c430059f
-packaging==24.2
+# attr==0.3.2
+# colorama==0.4.6
+# ConfigParser==7.1.0
+# cryptography==41.0.7
+# cryptography.egg==info
+# Cython==3.0.12
+datasets==3.1.0
+dgl==2.4.0+cu124
+dl==0.1.0
+docutils==0.21.2
+eth_utils==5.2.0
+filelock==3.17.0
+HTMLParser==0.0.2
+hypothesis==6.127.2
+imblearn==0.0
+importlib_resources==6.5.2
+ini2toml==0.15
+ipython==8.12.3
+# ipywidgets==8.1.5
+# jnius==1.1.0
+# keyring==25.6.0
+matplotlib==3.10.0
+mod==0.3.0
+networkx==3.4.2
+numpy==2.2.3
 pandas==2.2.3
-pillow==10.2.0
-psutil @ file:///work/perseverance-python-buildout/croot/psutil_1698863411559/work
-pydantic==2.9.2
-pydantic_core==2.23.4
-pyparsing==3.2.0
-pyserial==3.5
-PySocks @ file:///work/perseverance-python-buildout/croot/pysocks_1698845478203/work
-python-dateutil==2.9.0.post0
-pytz==2024.2
-PyYAML==6.0.2
-rdflib==7.1.1
-requests @ file:///croot/requests_1730999120400/work
-scikit-learn==1.5.2
-scipy @ file:///croot/scipy_1717521478074/work/dist/scipy-1.13.1-cp312-cp312-linux_x86_64.whl#sha256=a60c1bdf983ee297b25e41830d00cc2af50f00bcb47e55578703fef1594ec56e
-setuptools==75.1.0
-six==1.16.0
-sympy==1.13.1
-threadpoolctl==3.5.0
-torch==2.4.0+cpu
-torchaudio==2.4.0+cpu
+path.py==12.5.0
+Pillow==11.1.0
+pkg1==0.0.3
+protobuf==5.29.3
+psutil==6.1.0
+# psutil==5.9.8
+pyOpenSSL==23.2.0
+# pyOpenSSL==25.0.0
+pytest==8.3.4
+redis==5.2.1
+scikit_learn==1.6.1
+Sphinx==8.2.1
+sphinx_rtd_theme==3.0.2
+tomli_w==1.2.0
+torch==2.4.0
 torchmetrics==1.6.0
-torchvision==0.19.0+cpu
-tqdm @ file:///croot/tqdm_1724853939799/work
-typing_extensions==4.9.0
-tzdata==2024.2
-urllib3 @ file:///croot/urllib3_1727769808118/work
-wheel==0.44.0
+trove_classifiers==2025.2.18.16
+urllib3_secure_extra==0.1.0
+# usercustomize==1.0.0
+# xmlrpclib==1.0.1
+# xx==3.3.2
