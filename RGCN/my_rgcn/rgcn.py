@@ -25,7 +25,7 @@ DROP_OUT = 0.5
 # device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 # print(f"Using device: {device}")
 
-with open('RGCN/processed_dataset/359/creation_1367_shuffled.pkl', 'rb') as f:
+with open('RGCN/processed_dataset/359/creation_1346_shuffled.pkl', 'rb') as f:
     dataset = pickle.load(f)
 
 # Opcodes and related setup
