@@ -2,13 +2,19 @@ from collections import deque
 
 import networkx as nx
 from matplotlib import pyplot as plt
-
+import sys 
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import json
+# import src.dataflow as dataflow
+# import src.opcodes as opcodes
+# import src.tac_cfg as tac_cfg
+# import sog.sognode as sognode
+
 import dataflow
-import opcodes
-import sog.sognode
 import tac_cfg
-import sog.sognode as sognode
+import opcodes
+import sognode
 
 
 class SOGBuilder:
@@ -222,7 +228,7 @@ def save_to_json(adjacency_view):
 
 if __name__ == "__main__":
     print("test:\n")
-    file_path = "examples/basic.hex"
+    file_path = "SOG/examples/basic.hex"
     f = open(file_path, 'r')
     cfg = tac_cfg.TACGraph.from_bytecode(f.read())
     dataflow.analyse_graph(cfg)
