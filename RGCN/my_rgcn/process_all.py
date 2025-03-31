@@ -10,7 +10,7 @@ import torch.nn.functional as F
 
 # HOME_PATH = '/home/sandra/projects/'
 
-json_dir = '/home/sandra/projects/DATA/SOG_SET/2367'
+json_dir = '/home/sandra/DATA/SOG_SET/2367'
 csv_file_path = 'RGCN/shuffled_dataset/creation_1346_shuffled.csv'
 
 labels_df = pd.read_csv(csv_file_path)
@@ -68,6 +68,7 @@ class ContractGraphDataset(DGLDataset):
     def process(self):
         self.graphs = []
         self.labels = []
+        self.metadata = []
         for index, row in labels_df.iterrows():
             file_name = row['contract_creation_tx']
         # for file_name in os.listdir(self.json_dir):
@@ -80,10 +81,11 @@ class ContractGraphDataset(DGLDataset):
             if g is not None:
                 self.graphs.append(g)
                 self.labels.append(label)
+                self.metadata.append(row['contract_creation_tx'])
         self.labels = torch.tensor(self.labels)
 
     def __getitem__(self, idx):
-        return self.graphs[idx], self.labels[idx]
+        return self.graphs[idx], self.labels[idx], self.metadata[idx]
 
     def __len__(self):
         return len(self.graphs)
@@ -96,17 +98,20 @@ def collate_fn(batch):
     labels = torch.tensor(labels)
     return batched_graph, labels
 
-dataloader = DataLoader(dataset, batch_size=4, collate_fn=collate_fn, shuffle = True)
+# dataloader = DataLoader(dataset, batch_size=4, collate_fn=collate_fn, shuffle = True)
 
 # for batched_graph, labels in dataloader:
 #     print("Batched graph:", batched_graph)
 #     print("Labels:", labels)
 print(f"Number of graphs in loaded dataset: {len(dataset)}")
-# graph, label = dataset[0]
+
+# graph, label, metadata = dataset[899]
 # print(f"Graph: {graph}")
 # print(f"Label: {label}")
+# print(f"Metadata: {metadata}")
+
 num_labels_1 = 0
-for batched_graph, labels in dataset:
+for batched_graph, labels, metadata in dataset:
     num_labels_1 += (labels == 1).sum().item()
 print(f"Number of labels 1: {num_labels_1}")
 
