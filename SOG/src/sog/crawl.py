@@ -72,12 +72,13 @@ def fetch_from_trans(hash, api_key):
 def get_by_trans(csv_file, api_key, output_file):
     df = read_csv(csv_file)
     hashs = df['contract_creation_tx'].tolist()
+    labels_dict = df.set_index('contract_creation_tx')['malicious'].to_dict()
     results = []
 
     for hash in hashs:
         bytecode = fetch_from_trans(hash, api_key)
         if bytecode:
-            results.append({'contract_creation_tx': hash, 'bytecode': bytecode})
+            results.append({'contract_creation_tx': hash, 'malicious': labels_dict.get(hash, None), 'bytecode': bytecode})
 
     results_df = pd.DataFrame(results)
     results_df.to_csv(output_file, index=False)
@@ -90,19 +91,19 @@ def get_by_codes(csv_file, api_key, output_file):
     for address in addresses:
         bytecode = fetch_contract_bytecode(address, api_key)
         if bytecode:
-            results.append({'contract_address': address, 'bytecode': bytecode})
+            results.append({'contract_address': address, 'malicious': 1,'bytecode': bytecode})
 
     results_df = pd.DataFrame(results)
     results_df.to_csv(output_file, index=False)
 
 def main(csv_file, api_key, output_file):
-    get_by_codes(csv_file, api_key, output_file)
-    # get_by_trans(csv_file, api_key, output_file)
+    # get_by_codes(csv_file, api_key, output_file)
+    get_by_trans(csv_file, api_key, output_file)
 
 
 # Etherscan API密钥
 api_key = '1EYF2RHYIB34DH5SJHPZ2RV1KE7J8WTAU3'
-csv_file = 'dataset/379_malicoius.csv'
-output_file = 'bytecode/379_malicoius_bytecodes_deployed.csv'
+csv_file = 'RGCN/shuffled_dataset/creation_1346_shuffled.csv'
+output_file = 'RGCN/shuffled_dataset/creation_1346_shuffled_connection.csv'
 
 main(csv_file, api_key, output_file)

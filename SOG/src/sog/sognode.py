@@ -7,7 +7,7 @@ import networkx as nx
 # from src.tac_cfg import TACOp, TACArg
 
 import opcodes as opcodes
-from sog.sog_op import SOGOp, End, Project, BrRegion, Constant, Variable
+from sog_op import SOGOp, End, Project, BrRegion, Constant, Variable
 from tac_cfg import TACOp, TACArg
 
 

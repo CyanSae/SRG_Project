@@ -8,6 +8,8 @@ bin/disassemble examples/instances/2_inverse_finance.hex -o results/inverse_fina
 bin/decompile -t results/owner/tsv -d examples/owner.hex results/owner/decompile.txt
 python bin/decompile -t results/basic/tsv -d examples/basic.hex results/basic/decompile.txt
 python bin/decompile -g results/dao_hack/graph.html -t results/dao_hack/tsv -d examples/dao_hack.hex results/dao_hack/decompile.txt
+python SOG/bin/decompile -g SOG/results/322.html -t SOG/results/322/tsv -d SOG/examples/322.hex SOG/results/322/decompile.txt
+python SOG/bin/decompile -d SOG/examples/322.hex SOG/results/322/decompile.txt
 ```
 
 

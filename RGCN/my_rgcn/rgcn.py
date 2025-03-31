@@ -16,7 +16,7 @@ import psutil
 import os
 
 LR = 0.0001
-EPOCH = 10
+EPOCH = 1000
 H_DIM = 16
 OUT_DIM = 2
 BATCH_SIZE = 16
@@ -196,7 +196,7 @@ def train_model(model, train_dataloader, val_dataloader, optimizer, criterion, n
 best_model_state, train_losses, val_losses, train_acc, val_acc, best_epoch = train_model(model, train_dataloader, val_dataloader, optimizer, criterion)
 
 # Save the best model
-torch.save(best_model_state, f'RGCN/model/trained_model/best_model_rgcn_{len(dataset)}_{best_epoch}-{EPOCH}-{time.time()}.pt')
+torch.save(best_model_state, f'RGCN/model/trained_model/ponzi_rgcn_{len(dataset)}_{best_epoch}-{EPOCH}-{time.time()}.pt')
 
 def test_model(model, test_dataloader):
     model.eval()
@@ -274,7 +274,7 @@ def plot_loss_acc_curves(train_losses, val_losses, train_acc, val_acc):
     plt.ylabel('Loss')
     plt.title('Training Loss Curve')
     plt.legend()
-    plt.savefig(f"RGCN/losses/with_val/b2_loss_curve_{len(dataset)}_{time.time()}.png")
+    plt.savefig(f"RGCN/losses/ponzi/ponzi_loss_curve_{len(dataset)}_{time.time()}.png")
     
     plt.figure(figsize=(10, 8))
     df2 = pd.DataFrame(train_acc)
@@ -288,6 +288,6 @@ def plot_loss_acc_curves(train_losses, val_losses, train_acc, val_acc):
     plt.ylabel('Accuracy')
     plt.title('Training Accuracy Curve')
     plt.legend()
-    plt.savefig(f"RGCN/accs/with_val/b2_accuracy_curve_{len(dataset)}_{time.time()}.png")
+    plt.savefig(f"RGCN/accs/ponzi/ponzi_accuracy_curve_{len(dataset)}_{time.time()}.png")
 
 plot_loss_acc_curves(train_losses, val_losses, train_acc, val_acc)

@@ -24,7 +24,7 @@ def get_memory_usage():
     return mem_info.rss / 1024 / 1024  # 转换为 MB
 
 def save_to_json(adjacency_view, file_path):
-    edge_type_map = {"data": 0, "control": 1, "effect": 2}
+    edge_type_map = {"data": 0, "control": 1, "effect": 2, "connection": 3}
 
     nodes = {}
     edges_list = []
@@ -73,7 +73,7 @@ def process_with_timeout(data, timeout=30):
             result = future.result(timeout=timeout)
             return False
         except concurrent.futures.TimeoutError:
-            print(f"Processing time exceeded the limit of {timeout} seconds for data.")
+            # print(f"Processing time exceeded the limit of {timeout} seconds for data.")
             return True
 
 
@@ -106,10 +106,12 @@ def main(csv_file, output_dir):
     results = []
     # 处理每个合约字节码
     logging.info(f"程序启动时的内存占用: {get_memory_usage()} MB")
-    for index, (i, row) in enumerate(df.iterrows(), start=0):
+    for index, (i, row) in enumerate(df.iterrows(), start=750):
+        if i <750:
+            continue
         start_time = time.time()
-        contract_creation_tx = row['contract_creation_tx']
-        bytecode = row['creation_bytecode']
+        contract_creation_tx = row['contract_address']
+        bytecode = row['bytecode']
         # process_bytecode(bytecode, output_dir, contract_address)
         if bytecode != "" and bytecode != "0x":
             try:
@@ -119,7 +121,7 @@ def main(csv_file, output_dir):
                     try:
                         future.result(timeout=30)
                     except concurrent.futures.TimeoutError:
-                        print(f"Processing time exceeded the limit of {30} seconds for contract {contract_creation_tx}.")
+                        logging.error(f"Processing time exceeded the limit of {30} seconds for contract {contract_creation_tx}.")
                         continue
                 # 处理下一个
 
@@ -131,10 +133,10 @@ def main(csv_file, output_dir):
                 save_to_json(adjacency_view, json_file_path)
                 end_time = time.time()
                 processing_time = end_time - start_time
-                # print(f"{contract_creation_tx} done using {processing_time}")
+                print(f"{contract_creation_tx} done using {processing_time}")
                 results.append((contract_creation_tx, processing_time))
-                results_df = pd.DataFrame(results, columns=['contract_creation_tx', 'Time'])
-                results_df.to_csv('data/output/benign_processing_times2.csv', index=False)
+                results_df = pd.DataFrame(results, columns=['contract_address', 'Time'])
+                results_df.to_csv('SOG/data/output/ponzi_processing_times.csv', index=False)
 
             except Exception as e:
                 # print(f"An error occurred while processing contract {contract_creation_tx}: {e}")
@@ -143,6 +145,6 @@ def main(csv_file, output_dir):
 
 
 if __name__ == "__main__":
-    csv_file = 'data/1000.csv'
-    output_dir = '/home/sandra/projects/DATA/SOG_SET/memory'
+    csv_file = 'RGCN/dataset/ponzi/non-ponzi.csv'
+    output_dir = '/home/sandra/DATA/SOG_SET/1312Ponzi/non-ponzi'
     main(csv_file, output_dir)
