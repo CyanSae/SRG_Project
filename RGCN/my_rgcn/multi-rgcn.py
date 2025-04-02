@@ -13,15 +13,16 @@ import numpy as np
 import pickle
 from torch.utils.data.sampler import SubsetRandomSampler
 
-LR = 0.01
-EPOCH = 2000
+LR = 0.0001
+EPOCH = 1000
 H_DIM = 16
 OUT_DIM = 4
-BATCH_SIZE = 4
+BATCH_SIZE = 16
+DROP_OUT = 0.3
 # device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 # print(f"Using device: {device}")
 
-with open('RGCN/processed_dataset/Classified_incidents_shuffled.pkl', 'rb') as f:
+with open('RGCN/processed_dataset/multi/multi_shuffled.pkl', 'rb') as f:
     dataset = pickle.load(f)
 
 # Opcodes and related setup
@@ -40,13 +41,15 @@ num_opcodes = len(opcode_to_feature)
 print(f"Number of graphs in loaded dataset: {len(dataset)}")
 
 def count_labels(dataset, label=1):
-    num_labels = 0
+    num_labels_1 = 0
+    num_labels_2 = 0
     for _, labels in dataset:
-        num_labels += (labels == label).sum().item()
-    return num_labels
+        num_labels_1 += (labels == 1).sum().item()
+        num_labels_2 += (labels == 2).sum().item()
+    return num_labels_1, num_labels_2
 
-num_labels_1 = count_labels(dataset)
-print(f"Number of labels 1: {num_labels_1}")
+num_labels_1, num_labels_2 = count_labels(dataset)
+print(f"Number of labels 1: {num_labels_1}, Number of labels 2: {num_labels_2}")
 
 def create_data_loaders(dataset, batch_size=BATCH_SIZE, train_ratio=0.6, val_ratio=0.2):
     num_examples = len(dataset)
@@ -60,7 +63,7 @@ def create_data_loaders(dataset, batch_size=BATCH_SIZE, train_ratio=0.6, val_rat
 
     train_dataloader = GraphDataLoader(dataset, sampler=train_sampler, batch_size=batch_size, drop_last=False)
     val_dataloader = GraphDataLoader(dataset, sampler=val_sampler, batch_size=batch_size, drop_last=False)
-    test_dataloader = GraphDataLoader(dataset, sampler=test_sampler, batch_size=batch_size, drop_last=False)
+    test_dataloader = GraphDataLoader(dataset, sampler=test_sampler, batch_size=1, drop_last=False)
     
     return train_dataloader, val_dataloader, test_dataloader
 
@@ -71,7 +74,7 @@ class RGCN(nn.Module):
         super().__init__()
         self.conv1 = RelGraphConv(in_dim, h_dim, num_rels, regularizer="basis", num_bases=num_rels, self_loop=False)
         self.conv2 = RelGraphConv(h_dim, out_dim, num_rels, regularizer="basis", num_bases=num_rels, self_loop=False)
-        self.dropout = 0.2
+        self.dropout = DROP_OUT
         self.fc = nn.Linear(out_dim, OUT_DIM)
 
     def forward(self, g, features, etypes):
@@ -165,7 +168,7 @@ def train_model(model, train_dataloader, val_dataloader, optimizer, criterion, n
 best_model_state, train_losses, val_losses, train_acc, val_acc, best_epoch = train_model(model, train_dataloader, val_dataloader, optimizer, criterion)
 
 # Save the best model
-# torch.save(best_model_state, f'RGCN/model/trained_model/best_model_rgcn_{len(dataset)}_{best_epoch}-{EPOCH}.pt')
+torch.save(best_model_state, f'RGCN/model/trained_model/multi/best_model_rgcn_{len(dataset)}_{best_epoch}-{EPOCH}.pt')
 
 def test_model(model, test_dataloader):
     model.eval()
@@ -237,7 +240,7 @@ def plot_loss_acc_curves(train_losses, val_losses, train_acc, val_acc):
     plt.ylabel('Loss')
     plt.title('Training Loss Curve')
     plt.legend()
-    plt.savefig(f"RGCN/losses/with_val/mul_loss_curve_{len(dataset)}_{time.time()}.png")
+    plt.savefig(f"RGCN/losses/mul/mul_loss_curve_{len(dataset)}_{time.time()}.png")
     
     plt.figure(figsize=(10, 8))
     df2 = pd.DataFrame(train_acc)
@@ -251,6 +254,6 @@ def plot_loss_acc_curves(train_losses, val_losses, train_acc, val_acc):
     plt.ylabel('Accuracy')
     plt.title('Training Accuracy Curve')
     plt.legend()
-    plt.savefig(f"RGCN/accs/with_val/mul_accuracy_curve_{len(dataset)}_{time.time()}.png")
+    plt.savefig(f"RGCN/accs/mul/mul_accuracy_curve_{len(dataset)}_{time.time()}.png")
 
 plot_loss_acc_curves(train_losses, val_losses, train_acc, val_acc)

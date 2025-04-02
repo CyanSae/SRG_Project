@@ -10,8 +10,8 @@ import torch.nn.functional as F
 
 # HOME_PATH = '/home/sandra/projects/'
 
-json_dir = '/home/sandra/DATA/SOG_SET/2367'
-csv_file_path = 'RGCN/shuffled_dataset/creation_1346_shuffled.csv'
+json_dir = '/home/sandra/DATA/SOG_SET/multi'
+csv_file_path = 'RGCN/shuffled_dataset/multi_shuffled.csv'
 
 labels_df = pd.read_csv(csv_file_path)
 labels_dict = labels_df.set_index('contract_creation_tx')['malicious'].to_dict()
@@ -56,7 +56,7 @@ def process_json_file(file_path):
     
     contract_address = os.path.splitext(os.path.basename(file_path))[0]
 
-    label = 1 if labels_dict.get(contract_address, None) == 1 else 0
+    label = labels_dict.get(contract_address, None)
     # label = labels_dict.get(contract_address, 0)
     return g, label
 
@@ -115,5 +115,5 @@ for batched_graph, labels, metadata in dataset:
     num_labels_1 += (labels == 1).sum().item()
 print(f"Number of labels 1: {num_labels_1}")
 
-with open('RGCN/processed_dataset/359/creation_1346_shuffled.pkl', 'wb') as f:
+with open('RGCN/processed_dataset/multi/multi_shuffled.pkl', 'wb') as f:
     pickle.dump(dataset, f)

@@ -274,7 +274,7 @@ def plot_loss_acc_curves(train_losses, val_losses, train_acc, val_acc):
     plt.ylabel('Loss')
     plt.title('Training Loss Curve')
     plt.legend()
-    plt.savefig(f"RGCN/losses/ponzi/ponzi_loss_curve_{len(dataset)}_{time.time()}.png")
+    plt.savefig(f"RGCN/losses/zr_loss_curve_{len(dataset)}_{time.time()}.png")
     
     plt.figure(figsize=(10, 8))
     df2 = pd.DataFrame(train_acc)
@@ -288,6 +288,6 @@ def plot_loss_acc_curves(train_losses, val_losses, train_acc, val_acc):
     plt.ylabel('Accuracy')
     plt.title('Training Accuracy Curve')
     plt.legend()
-    plt.savefig(f"RGCN/accs/ponzi/ponzi_accuracy_curve_{len(dataset)}_{time.time()}.png")
+    plt.savefig(f"RGCN/accs/zr_accuracy_curve_{len(dataset)}_{time.time()}.png")
 
 plot_loss_acc_curves(train_losses, val_losses, train_acc, val_acc)

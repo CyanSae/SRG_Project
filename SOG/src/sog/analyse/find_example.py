@@ -11,5 +11,5 @@ for filename in os.listdir(directory):
                 graph_data = json.load(f)
                 node_count = graph_data.get("node_count", {})
                 edge_count = graph_data.get("edge_count", [])
-                if node_count == 5162 and edge_count == 5005:
+                if node_count == 1256 and edge_count == 1087:
                      print(filename)
