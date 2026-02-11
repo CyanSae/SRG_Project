@@ -14,7 +14,7 @@ import pickle
 from torch.utils.data.sampler import SubsetRandomSampler
 
 LR = 0.0001
-EPOCH = 5
+EPOCH = 10
 H_DIM = 32
 OUT_DIM = 6
 BATCH_SIZE = 32
@@ -69,32 +69,99 @@ def create_data_loaders(dataset, batch_size=BATCH_SIZE, train_ratio=0.6, val_rat
 
 train_dataloader, val_dataloader, test_dataloader = create_data_loaders(dataset)
 
-class RGCN(nn.Module):
-    def __init__(self, in_dim, h_dim, out_dim, num_rels):
-        super().__init__()
-        self.conv1 = RelGraphConv(in_dim, h_dim, num_rels, regularizer="basis", num_bases=num_rels, self_loop=False)
-        self.conv2 = RelGraphConv(h_dim, out_dim, num_rels, regularizer="basis", num_bases=num_rels, self_loop=False)
-        self.dropout = DROP_OUT
-        self.fc = nn.Linear(out_dim, OUT_DIM)
+class HierarchicalRGCN(nn.Module):
 
-    def forward(self, g, features, etypes):
-        h = F.relu(self.conv1(g, features, etypes))
-        h = self.conv2(g, h, etypes)
-        h = F.dropout(h, self.dropout, training=self.training)
+    def __init__(self, in_dim, h_dim, num_rels):
+
+        super().__init__()
+
+        self.conv1 = RelGraphConv(
+            in_dim, h_dim, num_rels,
+            regularizer="basis",
+            num_bases=num_rels,
+            self_loop=False
+        )
+
+        self.conv2 = RelGraphConv(
+            h_dim, h_dim, num_rels,
+            regularizer="basis",
+            num_bases=num_rels,
+            self_loop=False
+        )
+
+        self.dropout = nn.Dropout(DROP_OUT)
+
+        # 三个分类头
+        self.fc_l1 = nn.Linear(h_dim, 2)   # benign / malicious
+        self.fc_l2 = nn.Linear(h_dim, 2)   # attack / deception
+        self.fc_l3 = nn.Linear(h_dim, 5)   # 子类
+
+
+    def forward(self, g, feat, etype):
+
+        h = F.relu(self.conv1(g, feat, etype))
+        h = self.conv2(g, h, etype)
+
+        h = self.dropout(h)
+
         with g.local_scope():
+
             g.ndata['h'] = h
             hg = dgl.mean_nodes(g, 'h')
-        return self.fc(hg)
 
-def init_model(num_opcodes, num_rels=4):
-    model = RGCN(in_dim=num_opcodes, h_dim=H_DIM, out_dim=OUT_DIM, num_rels=num_rels)
-    optimizer = torch.optim.Adam(model.parameters(), lr=LR)
-    criterion = nn.CrossEntropyLoss()
+        out1 = self.fc_l1(hg)
+        out2 = self.fc_l2(hg)
+        out3 = self.fc_l3(hg)
+
+        return out1, out2, out3
+
+
+################################
+# 初始化
+################################
+
+def init_model(num_opcodes, num_rels=6):
+
+    in_dim = num_opcodes[0][0].ndata['feat'].shape[1]
+
+    model = HierarchicalRGCN(
+        in_dim,
+        H_DIM,
+        num_rels
+    )
+
+    optimizer = torch.optim.Adam(
+        model.parameters(),
+        lr=LR
+    )
+
+    criterion = nn.CrossEntropyLoss(
+        ignore_index=-1
+    )
+
     return model, optimizer, criterion
+
 
 model, optimizer, criterion = init_model(num_opcodes)
 
-def train_one_epoch(model, train_dataloader, optimizer, criterion):
+
+################################
+# Hierarchical Loss
+################################
+
+def compute_loss(preds, labels,
+                 w1=1.0, w2=0.7, w3=0.5):
+
+    p1, p2, p3 = preds
+    l1, l2, l3 = labels
+
+    loss1 = criterion(p1, l1)
+    loss2 = criterion(p2, l2)
+    loss3 = criterion(p3, l3)
+
+    return w1*loss1 + w2*loss2 + w3*loss3
+
+def train_one_epoch(model, train_dataloader, optimizer):
     model.train()
     num_correct = 0
     num_tests = 0
@@ -104,10 +171,26 @@ def train_one_epoch(model, train_dataloader, optimizer, criterion):
         labels = labels
         optimizer.zero_grad()
         pred = model(batched_graph, batched_graph.ndata['feat'], batched_graph.edata['etype'])
-        num_correct += (pred.argmax(1) == labels).sum().item()
-        num_tests += len(labels)
-        loss = criterion(pred, labels)
+        
+        # num_correct += (pred.argmax(1) == labels).sum().item()
+        # num_tests += len(labels)
+        # loss = criterion(pred, labels)
+        l1 = labels[:, 0]
+        l2 = labels[:, 1]
+        l3 = labels[:, 2]
+
+        loss = compute_loss(
+            pred,
+            (l1, l2, l3)
+        )
         epoch_loss += loss.item()
+
+        # 用L1算accuracy
+        pred_l1 = pred[0].argmax(1)
+
+        num_correct += (pred_l1 == l1).sum().item()
+        num_tests += len(l1)
+
         loss.backward()
         optimizer.step()
 
@@ -116,7 +199,7 @@ def train_one_epoch(model, train_dataloader, optimizer, criterion):
     
     return avg_loss, train_accuracy, num_correct, num_tests
 
-def evaluate(model, val_dataloader, criterion):
+def evaluate(model, val_dataloader):
     model.eval()
     val_loss = 0
     val_correct = 0
@@ -126,15 +209,27 @@ def evaluate(model, val_dataloader, criterion):
             batched_graph = batched_graph
             labels = labels
             pred = model(batched_graph, batched_graph.ndata['feat'], batched_graph.edata['etype'])
-            val_correct += (pred.argmax(1) == labels).sum().item()
-            val_tests += len(labels)
-            val_loss += criterion(pred, labels).item()
+            l1 = labels[:, 0]
+            l2 = labels[:, 1]
+            l3 = labels[:, 2]
+
+            loss = compute_loss(
+                pred,
+                (l1, l2, l3)
+            )
+
+            val_loss += loss.item()
+
+            pred_l1 = pred[0].argmax(1)
+
+            val_correct += (pred_l1 == l1).sum().item()
+            val_tests += len(l1)
     
     val_loss /= len(val_dataloader)
     val_accuracy = val_correct / val_tests
     return val_loss, val_accuracy
 
-def train_model(model, train_dataloader, val_dataloader, optimizer, criterion, num_epochs=EPOCH):
+def train_model(model, train_dataloader, val_dataloader, optimizer, num_epochs=EPOCH):
     train_losses, val_losses = [], []
     train_acc, val_acc = [], []
     best_val_loss = float('inf')
@@ -144,8 +239,8 @@ def train_model(model, train_dataloader, val_dataloader, optimizer, criterion, n
     start_time = time.time()
 
     for epoch in range(num_epochs):
-        train_loss, train_accuracy, num_correct, num_tests = train_one_epoch(model, train_dataloader, optimizer, criterion)
-        val_loss, val_accuracy = evaluate(model, val_dataloader, criterion)
+        train_loss, train_accuracy, num_correct, num_tests = train_one_epoch(model, train_dataloader, optimizer)
+        val_loss, val_accuracy = evaluate(model, val_dataloader)
         
         train_losses.append(train_loss)
         val_losses.append(val_loss)
@@ -165,17 +260,36 @@ def train_model(model, train_dataloader, val_dataloader, optimizer, criterion, n
     
     return best_model_state, train_losses, val_losses, train_acc, val_acc, best_epoch
 
-best_model_state, train_losses, val_losses, train_acc, val_acc, best_epoch = train_model(model, train_dataloader, val_dataloader, optimizer, criterion)
+best_model_state, train_losses, val_losses, train_acc, val_acc, best_epoch = train_model(model, train_dataloader, val_dataloader, optimizer)
 
 # Save the best model
 # torch.save(best_model_state, f'RGCN/model/trained_model/multi/best_model_rgcn_{len(dataset)}_{best_epoch}-{EPOCH}.pt')
+
+def hierarchical_predict(preds):
+
+    p1, p2, p3 = preds
+
+    l1 = p1.argmax(1)
+    l2 = p2.argmax(1)
+    l3 = p3.argmax(1)
+
+    final = []
+
+    for i in range(len(l1)):
+
+        if l1[i] == 0:
+            final.append(0)
+
+        else:
+            final.append(1)
+
+    return torch.tensor(final)
 
 def test_model(model, test_dataloader):
     model.eval()
     num_correct = 0
     num_tests = 0
     all_preds, all_labels = [], []
-    failed_samples = []
     test_start_time = time.time()
     
     with torch.no_grad():
@@ -184,10 +298,18 @@ def test_model(model, test_dataloader):
             labels = labels
             pred = model(batched_graph, batched_graph.ndata['feat'], batched_graph.edata['etype'])
             
-            num_correct += (pred.argmax(1) == labels).sum().item()
-            num_tests += len(labels)
-            all_preds.extend(pred.argmax(1).tolist())
-            all_labels.extend(labels.tolist())
+            final_pred = hierarchical_predict(pred)
+
+            gt = labels[:, 0]
+
+            num_correct += (final_pred == gt).sum().item()
+            num_tests += len(gt)
+
+            all_preds.extend(final_pred.tolist())
+            all_labels.extend(gt.tolist())
+
+            # all_preds.extend(pred.argmax(1).tolist())
+            # all_labels.extend(labels.tolist())
 
             # for i in range(len(labels)):
             #     if pred.argmax(1)[i] != labels[i]:

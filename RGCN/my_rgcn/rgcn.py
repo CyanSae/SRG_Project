@@ -16,7 +16,7 @@ import psutil
 import os
 
 LR = 0.0001
-EPOCH = 1000
+EPOCH = 100
 H_DIM = 16
 OUT_DIM = 2
 BATCH_SIZE = 16
@@ -25,7 +25,7 @@ DROP_OUT = 0.5
 # device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 # print(f"Using device: {device}")
 
-with open('RGCN/processed_dataset/359/creation_1346_shuffled.pkl', 'rb') as f:
+with open('RGCN/processed_dataset/fraud/shuffled_phish.pkl', 'rb') as f:
     dataset = pickle.load(f)
 
 # Opcodes and related setup
@@ -196,7 +196,7 @@ def train_model(model, train_dataloader, val_dataloader, optimizer, criterion, n
 best_model_state, train_losses, val_losses, train_acc, val_acc, best_epoch = train_model(model, train_dataloader, val_dataloader, optimizer, criterion)
 
 # Save the best model
-torch.save(best_model_state, f'RGCN/model/trained_model/ponzi_rgcn_{len(dataset)}_{best_epoch}-{EPOCH}-{time.time()}.pt')
+torch.save(best_model_state, f'RGCN/model/trained_model/phish_rgcn_{len(dataset)}_{best_epoch}-{EPOCH}-{time.time()}.pt')
 
 def test_model(model, test_dataloader):
     model.eval()
@@ -274,7 +274,7 @@ def plot_loss_acc_curves(train_losses, val_losses, train_acc, val_acc):
     plt.ylabel('Loss')
     plt.title('Training Loss Curve')
     plt.legend()
-    plt.savefig(f"RGCN/losses/zr_loss_curve_{len(dataset)}_{time.time()}.png")
+    plt.savefig(f"RGCN/losses/phish_loss_{len(dataset)}_{time.time()}.png")
     
     plt.figure(figsize=(10, 8))
     df2 = pd.DataFrame(train_acc)
@@ -288,6 +288,6 @@ def plot_loss_acc_curves(train_losses, val_losses, train_acc, val_acc):
     plt.ylabel('Accuracy')
     plt.title('Training Accuracy Curve')
     plt.legend()
-    plt.savefig(f"RGCN/accs/zr_accuracy_curve_{len(dataset)}_{time.time()}.png")
+    plt.savefig(f"RGCN/accs/phish_accuracy_{len(dataset)}_{time.time()}.png")
 
 plot_loss_acc_curves(train_losses, val_losses, train_acc, val_acc)

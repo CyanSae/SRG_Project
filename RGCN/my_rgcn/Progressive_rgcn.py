@@ -13,8 +13,8 @@ import numpy as np
 import pickle
 from torch.utils.data.sampler import SubsetRandomSampler
 
-LR = 0.0001
-EPOCH = 5
+LR = 0.00005
+EPOCH = 500
 H_DIM = 32
 OUT_DIM = 6
 BATCH_SIZE = 32
@@ -86,6 +86,33 @@ class RGCN(nn.Module):
             hg = dgl.mean_nodes(g, 'h')
         return self.fc(hg)
 
+class ProgressiveTrainer:
+    def __init__(self, base_model, class_groups):
+        """
+        class_groups示例: [[0], [0,1], [0,1,2], ...]
+        """
+        self.model = base_model
+        self.class_groups = class_groups
+        self.current_stage = 0
+        
+    def freeze_layers(self, layers_to_freeze):
+        for name, param in self.model.named_parameters():
+            if any(layer in name for layer in layers_to_freeze):
+                param.requires_grad = False
+                
+    def expand_classifier(self, new_classes):
+        old_weight = self.model.fc.weight.data
+        self.model.fc = nn.Linear(old_weight.shape[1], old_weight.shape[0]+new_classes)
+        # 权重初始化策略...
+
+# 使用示例
+progressive_stages = [
+    {'classes': [0, 1], 'freeze': ['conv1']},          # Stage1: 良性 vs 对抗
+    {'classes': [0,1,2], 'freeze': []},                # Stage2: 加入庞氏
+    {'classes': [0,1,2,3], 'freeze': []},              # Stage3: 加入蜜罐
+    {'classes': [0,1,2,3,4], 'freeze': []},            # Stage4: 加入钓鱼
+]
+
 def init_model(num_opcodes, num_rels=4):
     model = RGCN(in_dim=num_opcodes, h_dim=H_DIM, out_dim=OUT_DIM, num_rels=num_rels)
     optimizer = torch.optim.Adam(model.parameters(), lr=LR)
@@ -93,6 +120,8 @@ def init_model(num_opcodes, num_rels=4):
     return model, optimizer, criterion
 
 model, optimizer, criterion = init_model(num_opcodes)
+
+trainer = ProgressiveTrainer(model, progressive_stages)
 
 def train_one_epoch(model, train_dataloader, optimizer, criterion):
     model.train()
@@ -165,10 +194,27 @@ def train_model(model, train_dataloader, val_dataloader, optimizer, criterion, n
     
     return best_model_state, train_losses, val_losses, train_acc, val_acc, best_epoch
 
-best_model_state, train_losses, val_losses, train_acc, val_acc, best_epoch = train_model(model, train_dataloader, val_dataloader, optimizer, criterion)
+# best_model_state, train_losses, val_losses, train_acc, val_acc, best_epoch = train_model(model, train_dataloader, val_dataloader, optimizer, criterion)
 
 # Save the best model
 # torch.save(best_model_state, f'RGCN/model/trained_model/multi/best_model_rgcn_{len(dataset)}_{best_epoch}-{EPOCH}.pt')
+
+for stage in progressive_stages:
+    # 1. 过滤当前阶段相关数据
+    current_classes = stage['classes']
+    filtered_dataset = [data for data in dataset if data[1] in current_classes]
+    
+    # 2. 调整分类器
+    trainer.expand_classifier(len(current_classes))
+    
+    # 3. 设置参数冻结
+    trainer.freeze_layers(stage['freeze'])
+    
+    # 4. 训练当前阶段
+    best_model_state, train_losses, val_losses, train_acc, val_acc, best_epoch = train_model(model, train_dataloader, val_dataloader, optimizer, criterion)
+    
+    # 5. 保存检查点
+    torch.save(best_model_state, f'RGCN/model/trained_model/multi/best_model_rgcn_{len(dataset)}_{best_epoch}-{EPOCH}.pt')
 
 def test_model(model, test_dataloader):
     model.eval()

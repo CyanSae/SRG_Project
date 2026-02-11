@@ -111,7 +111,7 @@ def main(csv_file, output_dir):
             continue
         start_time = time.time()
         contract_creation_tx = row['contract_creation_tx']
-        bytecode = row['bytecode']
+        bytecode = row['creation_bytecode']
         # process_bytecode(bytecode, output_dir, contract_address)
         if bytecode != "" and bytecode != "0x":
             try:
@@ -136,7 +136,7 @@ def main(csv_file, output_dir):
                 print(f"{contract_creation_tx} done using {processing_time}")
                 results.append((contract_creation_tx, processing_time))
                 results_df = pd.DataFrame(results, columns=['contract_address', 'Time'])
-                results_df.to_csv('SOG/data/output/connection_346_processing_times.csv', index=False)
+                # results_df.to_csv('SOG/data/output/instru_processing_times.csv', index=False)
 
             except Exception as e:
                 # print(f"An error occurred while processing contract {contract_creation_tx}: {e}")
@@ -146,5 +146,5 @@ def main(csv_file, output_dir):
 
 if __name__ == "__main__":
     csv_file = 'SOG/bytecode/379_malicoius_bytecodes.csv'
-    output_dir = '/home/sandra/DATA/SOG_SET/1346connection/'
+    output_dir = '/home/sandra/DATA/SOG_SET/111/'
     main(csv_file, output_dir)

@@ -2,6 +2,7 @@ import time
 
 import pandas as pd
 import requests
+from csv import writer
 
 
 def read_csv(file_path):
@@ -10,11 +11,15 @@ def read_csv(file_path):
     # return df['contract_address'].tolist()
     return df
 
+proxies = {
+    "http": "http://192.168.50.119:7890",
+    "https": "http://192.168.50.119:7890"
+}
 
-def fetch_with_retry(url, params, retries=3, delay=5):
+def fetch_with_retry(url, params, retries=3, delay=20):
     for i in range(retries):
         try:
-            response = requests.get(url, params=params, verify=False)
+            response = requests.get(url, params=params, proxies=proxies, verify=False)
             response.raise_for_status()
             return response
         except requests.exceptions.RequestException as e:
@@ -87,23 +92,29 @@ def get_by_codes(csv_file, api_key, output_file):
     df = read_csv(csv_file)
     addresses = df['contract_address'].tolist()
     results = []
+    with open(output_file, "w", newline='', encoding="utf-8") as f:
+        f.write("contract_address,malicious,bytecode\n")
 
     for address in addresses:
         bytecode = fetch_contract_bytecode(address, api_key)
         if bytecode:
-            results.append({'contract_address': address, 'malicious': 1,'bytecode': bytecode})
+             row = [address, 1, bytecode]
+             with open(output_file, "a", newline='', encoding="utf-8") as f:
+                writer_obj = writer(f)
+                writer_obj.writerow(row)
+            # results.append({'contract_address': address, 'malicious': 1,'bytecode': bytecode})
 
-    results_df = pd.DataFrame(results)
-    results_df.to_csv(output_file, index=False)
+    # results_df = pd.DataFrame(results)
+    # results_df.to_csv(output_file, index=False)
 
 def main(csv_file, api_key, output_file):
-    # get_by_codes(csv_file, api_key, output_file)
-    get_by_trans(csv_file, api_key, output_file)
+    get_by_codes(csv_file, api_key, output_file)
+    # get_by_trans(csv_file, api_key, output_file)
 
 
 # Etherscan API密钥
 api_key = '1EYF2RHYIB34DH5SJHPZ2RV1KE7J8WTAU3'
-csv_file = 'RGCN/shuffled_dataset/creation_1346_shuffled.csv'
-output_file = 'RGCN/shuffled_dataset/creation_1346_shuffled_connection.csv'
+csv_file = 'SOG/dataset/phish2.csv'
+output_file = 'SOG/bytecode/phish2.csv'
 
 main(csv_file, api_key, output_file)
