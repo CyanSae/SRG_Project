@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+runtime/downloads/*
+runtime/jobs/*
+runtime/mplconfig/*
+runtime/test_srg/*
+
+!runtime/downloads/.gitkeep
+!runtime/jobs/.gitkeep
+!runtime/mplconfig/.gitkeep
+!runtime/test_srg/.gitkeep

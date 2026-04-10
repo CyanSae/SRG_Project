@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SRG 图谱可视化</title>
+  <link rel="stylesheet" href="/shared-lib/vis-network.css" />
+  <link rel="stylesheet" href="/assets/graph.css?v=3" />
+</head>
+<body>
+  <main class="graph-page">
+    <section class="graph-header">
+      <div>
+        <p class="eyebrow">SRG Visualization</p>
+        <h1>SRG 图谱可视化</h1>
+        <p id="graphMeta" class="muted">正在加载图数据...</p>
+      </div>
+      <div class="legend">
+        <span class="legend-item"><i class="legend-color data"></i>数据边</span>
+        <span class="legend-item"><i class="legend-color control"></i>控制边</span>
+        <span class="legend-item"><i class="legend-color effect"></i>影响边</span>
+        <span class="legend-item"><i class="legend-color connection"></i>连接边</span>
+      </div>
+    </section>
+
+    <section class="graph-layout">
+      <section class="graph-card">
+        <div class="graph-toolbar">
+          <button id="fitButton" type="button" class="tool-button">适配视图</button>
+          <button id="stabilizeButton" type="button" class="tool-button">重新布局</button>
+          <span class="toolbar-tip">支持拖拽节点、画布平移、滚轮缩放、点击节点查看详情</span>
+        </div>
+        <div id="graphCanvas" role="img" aria-label="SRG 图结构"></div>
+      </section>
+
+      <aside class="detail-card">
+        <h2>节点详情</h2>
+        <p id="detailHint" class="muted">点击任意节点后，这里会显示 opcode、节点编号和关联信息。</p>
+        <dl class="detail-list">
+          <div>
+            <dt>节点编号</dt>
+            <dd id="detailNodeId">-</dd>
+          </div>
+          <div>
+            <dt>Opcode</dt>
+            <dd id="detailOpcode">-</dd>
+          </div>
+          <div>
+            <dt>简称</dt>
+            <dd id="detailShortLabel">-</dd>
+          </div>
+          <div>
+            <dt>入边数量</dt>
+            <dd id="detailInDegree">-</dd>
+          </div>
+          <div>
+            <dt>出边数量</dt>
+            <dd id="detailOutDegree">-</dd>
+          </div>
+        </dl>
+      </aside>
+    </section>
+  </main>
+
+  <script src="/shared-lib/vis-network.min.js"></script>
+  <script src="/assets/graph.js?v=3"></script>
+</body>
+</html>

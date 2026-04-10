@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>恶意合约检测原型系统</title>
+  <link rel="stylesheet" href="/assets/style.css?v=3" />
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <p class="eyebrow">Malicious Smart Contract Detection Prototype System</p>
+      <h1>恶意合约检测原型系统</h1>
+      <p class="hero-text hero-text-nowrap">
+        支持上传合约地址或合约创建字节码，自动生成 SRG JSON，并基于现有层次化 RGCN 模型输出恶意检测结果。
+      </p>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <h2>输入与配置</h2>
+        <button id="healthButton" class="ghost-button" type="button">检查服务状态</button>
+      </div>
+
+      <form id="analyzeForm" class="form-grid">
+        <div class="field">
+          <label for="detectMode">检测模式</label>
+          <select id="detectMode" name="detectMode">
+            <option value="single">单个合约检测</option>
+            <option value="batch">合约批量检测</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="sourceType">输入方式</label>
+          <select id="sourceType" name="sourceType">
+            <option value="bytecode">直接输入字节码</option>
+            <option value="address">输入合约地址并在线抓取</option>
+          </select>
+        </div>
+
+        <div class="field" id="granularityField" hidden>
+          <label for="granularity">检测粒度</label>
+          <select id="granularity" name="granularity">
+            <option value="binary">仅检测是否为恶意合约</option>
+            <option value="category">检测对抗性/欺诈性大类</option>
+            <option value="subtype" selected>输出具体恶意合约类型</option>
+          </select>
+        </div>
+
+        <div class="field full-width" id="addressField" hidden>
+          <label for="address">合约地址</label>
+          <input id="address" name="address" type="text" placeholder="例如：0x0000000000000000000000000000000000000000" />
+        </div>
+
+        <div class="field full-width" id="batchAddressField" hidden>
+          <label for="batchAddress">批量合约地址</label>
+          <textarea id="batchAddress" name="batchAddress" rows="10" placeholder="每行一个合约地址"></textarea>
+        </div>
+
+        <div class="field full-width" id="bytecodeField">
+          <label for="bytecode">合约创建字节码</label>
+          <textarea id="bytecode" name="bytecode" rows="10" placeholder="请输入或粘贴 0x 开头的创建字节码"></textarea>
+        </div>
+
+        <div class="field full-width" id="batchBytecodeField" hidden>
+          <label for="batchBytecode">批量创建字节码</label>
+          <textarea id="batchBytecode" name="batchBytecode" rows="10" placeholder="每行一条创建字节码"></textarea>
+        </div>
+
+        <div class="field full-width">
+          <label for="bytecodeFile">上传输入文件</label>
+          <input id="bytecodeFile" name="bytecodeFile" type="file" accept=".csv,.txt,.hex,.bin,.bytecode" />
+        </div>
+
+        <div class="actions">
+          <button id="submitButton" type="submit">开始检测</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <h2>执行反馈</h2>
+      </div>
+      <pre id="statusBox" class="status-box">系统就绪，等待输入。</pre>
+    </section>
+
+    <section class="panel" id="resultPanel" hidden>
+      <div class="panel-header">
+        <h2>检测结果</h2>
+        <div class="panel-actions">
+          <a id="visualizeLink" class="ghost-button" href="#" target="_blank" rel="noopener noreferrer">查看 SRG 图谱</a>
+          <a id="downloadLink" class="ghost-button" href="#" download>下载 SRG JSON</a>
+        </div>
+      </div>
+
+      <div class="result-hero">
+        <div>
+          <p class="result-label">当前展示结果</p>
+          <h3 id="resultTitle">-</h3>
+        </div>
+        <div class="badge" id="confidenceBadge">置信度 -</div>
+      </div>
+
+      <div class="result-grid">
+        <article class="card">
+          <h3>一级检测</h3>
+          <p id="binarySummary">-</p>
+        </article>
+        <article class="card">
+          <h3>二级检测</h3>
+          <p id="categorySummary">-</p>
+        </article>
+        <article class="card">
+          <h3>三级检测</h3>
+          <p id="subtypeSummary">-</p>
+        </article>
+      </div>
+
+      <div class="result-grid">
+        <article class="card">
+          <h3>图结构统计</h3>
+          <p id="graphStats">-</p>
+        </article>
+        <article class="card">
+          <h3>输入来源</h3>
+          <p id="inputStats">-</p>
+        </article>
+        <article class="card">
+          <h3>任务编号</h3>
+          <p id="jobStats">-</p>
+        </article>
+      </div>
+
+      <div class="ranking-grid">
+        <article class="card">
+          <h3>一级概率排序</h3>
+          <ul id="binaryRanking" class="ranking-list"></ul>
+        </article>
+        <article class="card">
+          <h3>二级概率排序</h3>
+          <ul id="categoryRanking" class="ranking-list"></ul>
+        </article>
+        <article class="card">
+          <h3>三级概率排序</h3>
+          <ul id="subtypeRanking" class="ranking-list"></ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel" id="batchResultPanel" hidden>
+      <div class="panel-header">
+        <h2>批量检测结果</h2>
+      </div>
+      <div class="result-grid">
+        <article class="card">
+          <h3>任务摘要</h3>
+          <p id="batchSummary">-</p>
+        </article>
+        <article class="card">
+          <h3>恶意统计</h3>
+          <p id="batchMaliciousSummary">-</p>
+        </article>
+        <article class="card">
+          <h3>失败统计</h3>
+          <p id="batchFailedSummary">-</p>
+        </article>
+      </div>
+      <article class="card" style="margin-top: 16px;">
+        <h3>批量明细</h3>
+        <div id="batchTableWrapper"></div>
+      </article>
+    </section>
+  </main>
+
+  <script src="/assets/app.js?v=3"></script>
+</body>
+</html>
